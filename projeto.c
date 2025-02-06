@@ -35,43 +35,6 @@ typedef struct {
     char descricao[300];
 } td_compromisso;
 
-// parte observacoes do .txt
-int* alocarVetorAlunos(int tamanhoVetorAlunos) {
-    int *vetor = (int*)malloc(tamanhoVetorAlunos * sizeof(int));
-    if (vetor == NULL) {
-        printf("Erro na alocação de memória!\n");
-        exit(1);
-    }
-    return vetor;
-}
-
-int* realocarVetorAlunos(int *vetor, int novoTamanhoVetorAlunos) {
-    vetor = (int*)realloc(vetor, novoTamanhoVetorAlunos * sizeof(int));
-    if (vetor == NULL) {
-        printf("Erro na realocação de memória!\n");
-        exit(1);
-    }
-    return vetor;
-}
-
-int* alocarVetorCompromissos() {
-    int *vetor = (int*)malloc(15 * sizeof(int));
-    if (vetor == NULL) {
-        printf("Erro na alocação de memória!\n");
-        exit(1);
-    }
-    return vetor;
-}
-
-int* realocarVetorCompromissos(int *vetor) {
-    vetor = (int*)realloc(vetor, 5 * sizeof(int));
-    if (vetor == NULL) {
-        printf("Erro na realocação de memória!\n");
-        exit(1);
-    }
-    return vetor;
-}
-
 //acho que ta certo
 void cadastra_aluno(td_aluno [], int) {
     printf("ra: ");
@@ -153,6 +116,43 @@ void imprime_vetor_de_alunos(td_aluno [], int) {
     
 }
 
+// parte observacoes do .txt
+int* alocarVetorAlunos(int tamanhoVetorAlunos) {
+    int *vetor = (int*)malloc(tamanhoVetorAlunos * sizeof(int));
+    if (vetor == NULL) {
+        printf("Erro na alocação de memória!\n");
+        exit(1);
+    }
+    return vetor;
+}
+
+int* realocarVetorAlunos(int *vetor, int novoTamanhoVetorAlunos) {
+    vetor = (int*)realloc(vetor, novoTamanhoVetorAlunos * sizeof(int));
+    if (vetor == NULL) {
+        printf("Erro na realocação de memória!\n");
+        exit(1);
+    }
+    return vetor;
+}
+
+int* alocarVetorCompromissos() {
+    int *vetor = (int*)malloc(15 * sizeof(int));
+    if (vetor == NULL) {
+        printf("Erro na alocação de memória!\n");
+        exit(1);
+    }
+    return vetor;
+}
+
+int* realocarVetorCompromissos(int *vetor) {
+    vetor = (int*)realloc(vetor, 5 * sizeof(int));
+    if (vetor == NULL) {
+        printf("Erro na realocação de memória!\n");
+        exit(1);
+    }
+    return vetor;
+}
+
 int main(void) {
     //lembrar de iniciar os vetores alunos e compromissos
     int tamanhoVetorAlunos = 10;
@@ -171,49 +171,62 @@ int main(void) {
             "6 - imprimir dados de todos os alunos  - ordenado por RA\n"
             "7 - sair\n");
 
-    int opcao;
-    char subopcao;
-    scanf("%d", &opcao);
+    do {
+        int opcao;
+        char subopcao;
+        scanf("%d", &opcao);
 
-    switch (opcao) {
-        case 1:
-            break;
-        case 2:
-            cadastra_aluno(vetorAlunos, 1);
-            break;
-        case 3:
-            cadastra_compromisso(vetorCompromissos, 1);
-            break;
-        case 4:
-            printf("   a - de um aluno                    - ordenado por data e hora\n"
-                    "   b - de todos os alunos             - ordenado por RA, data e hora\n"
-                    "   c - de uma data                    - ordenado por hora e RA\n"
-                    "   d - de todas as datas              - ordenado por data, hora e RA\n");
-                    scanf("%c", &subopcao);
-                    subopcao = tolower(subopcao);
-                    switch(subopcao) {
-                        case 'a':
-                            break;
-                        case 'b':
-                            break;
-                        case 'c':
-                            break;
-                        case 'd':
-                            break;
-                    }
-            break;
-        case 5:
-            break;
-        case 6:
-            break;
-        case 7:
-            printf("saindo do programa...");
-            return;
-        default:
-            return 1;
-            break;
-    }
+        switch (opcao) {
+            case 1:
+                break;
+            case 2:
+                cadastra_aluno(vetorAlunos, 1);
+                break;
+            case 3:
+                cadastra_compromisso(vetorCompromissos, 1);
+                break;
+            case 4:
+                printf("   a - de um aluno                    - ordenado por data e hora\n"
+                        "   b - de todos os alunos             - ordenado por RA, data e hora\n"
+                        "   c - de uma data                    - ordenado por hora e RA\n"
+                        "   d - de todas as datas              - ordenado por data, hora e RA\n");
+                        scanf("%c", &subopcao);
+                        subopcao = tolower(subopcao);
+                        switch(subopcao) {
+                            case 'a':
+                                break;
+                            case 'b':
+                                break;
+                            case 'c':
+                                break;
+                            case 'd':
+                                break;
+                        }
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                printf("saindo do programa...");
+                break;
+            default:
+                return 1;
+                break;
+        }
+            printf("1 - cadastrar disciplina\n"
+            "2 - cadastrar aluno\n"
+            "3 - cadastrar compromisso\n"
+            "4 - imprimir compromissos\n"
+            "   a - de um aluno                    - ordenado por data e hora\n"
+            "   b - de todos os alunos             - ordenado por RA, data e hora\n"
+            "   c - de uma data                    - ordenado por hora e RA\n"
+            "   d - de todas as datas              - ordenado por data, hora e RA\n"
+            "5 - imprimir dados de um aluno\n"
+            "6 - imprimir dados de todos os alunos  - ordenado por RA\n"
+            "7 - sair\n");
 
+    } while (opcao != 7);
 
     //lembrar de dar liberar a memorias dos vetores alunos e compromissos
     free(vetorAlunos);
