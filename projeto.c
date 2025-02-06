@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef struct {
     int dia;
@@ -95,6 +96,22 @@ int verifica_horario(td_hora *) {
         return 0
     }
     return 1;
+}
+
+
+
+//come;ar daqui pra baixo
+void cadastra compromisso(td_compromisso, int) {
+    // devo usar ponteiro para apontar para o aluno? como faco isso
+
+    printf("data do compromisso: (dia, mes, ano)"); 
+    scanf("%d %d %d", &data->dia, &data->mes, &data->ano);
+
+    printf("horario do compromisso: (hora, minutos)");
+    scanf("%d %d", &hora->hora, &hora->min);
+}
+
+void imprime_vetor_de_alunos(td_aluno [], int) {
 }
 
 int main(void) {
