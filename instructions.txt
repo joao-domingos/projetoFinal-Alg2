@@ -1,0 +1,158 @@
+
+
+Utilizando structs a seguir:
+----------------------------
+
+1 - uma struct para armazenar data:
+typedef struct {
+    int dia;
+    int mes;
+    int ano;
+} td_data;
+
+2 - uma struct para armazenar horário:
+typedef struct {
+    int hora;
+    int min;
+} td_hora;
+
+3 - uma struct para armazenar dados de disciplina:
+typedef struct{
+    int codigo_dis;
+    char disciplina[100];
+    float notas[4];
+    float media;
+} td_disciplina;
+
+4 - uma struct para armazenar dados de aluno:
+typedef struct {
+    int ra;
+    char nome[100];
+    td_data matrícula;
+    td_disciplina disciplinas[4];
+    char email[100];
+} td_aluno;
+
+5 - uma struct para armazenar dados de compromisso:
+typedef struct {
+    td_aluno aluno;
+    td_hora horario;
+    td_data data;
+    char descricao[300];
+} td_compromisso;
+
+ 
+
+Escrever funções para:
+----------------------
+
+ 
+
+1 - cadastrar aluno, sendo:
+  a - um aluno deve cursar ao menos 4 disciplinas
+
+  b - para cada disciplina deve haver 4 notas, com o respectivo cálculo da sua média
+
+//recebe um vetor do tipo td_aluno e sua dimensão
+void cadastra aluno(td_aluno [], int);
+
+ 
+
+2 - validar data - não deve ser permitido o cadastro de uma data que não seja válida
+
+//recebe um ponteiro para a struct td_data, que irá apontar para a data de matrícula na struct td_aluno
+int verifica_data(td_data *);
+
+ 
+
+3 - validar hora - não deve ser permitido o cadastro de um horário que não seja válido
+
+//recebe um ponteiro para a struct td_hora, que irá apontar para o horário do compromisso
+int verifica_horario(td_hora *);
+
+ 
+
+4 - cadastrar um compromisso
+  a - um aluno não pode ter mais do que dois compromissos cadastrados na mesma data
+  b - caso um aluno possua dois compromissos na mesma data, os horários não podem estar sobrepostos/coincidentes
+
+//recebe um vetor do tipo td_compromisso e sua dimensão
+void cadastra compromisso(td_compromisso, int)
+
+ 
+
+5 - imprimir os dados de aluno:
+
+//recebe um vetor do tipo aluno e sua dimensão
+void imprime_vetor_de_alunos(td_aluno [], int);
+
+ 
+
+6 – alocar dinamicamente o vetor de alunos
+
+ 
+
+7 – realocar dinamicamente o vetor de alunos
+
+ 
+
+8 – alocar dinamicamente o vetor de compromissos
+
+ 
+
+9 – realocar dinamicamente o vetor de compromissos
+
+
+Opcionalmente podem ser escritas funções para:
+----------------------------------------------
+
+- ler horário
+
+//recebe um ponteiro para a struct td_hora, que irá apontar para o horário do compromisso
+void le_horario(td_hora *);
+
+ 
+
+- ler data
+
+//recebe um ponteiro para a struct data, que irá apontar para a data de matrícula na struct td_aluno
+void le_data(data *);
+
+ 
+
+O programa deve, obrigatoriamente, possuir:
+-------------------------------------------
+
+ 
+
+Um menu de opções da seguinte forma:
+
+1 - cadastrar disciplina
+2 - cadastrar aluno
+3 - cadastrar compromisso
+4 - imprimir compromissos
+    a - de um aluno                    - ordenado por data e hora
+    b - de todos os alunos             - ordenado por de ra, data e hora
+    c - de uma data                    - ordenado por hora e ra
+    d - de todas as datas              - ordenado por data, hora e ra
+5 - imprimir dados de um aluno
+6 - imprimir dados de todos os alunos  - ordenado por ra
+7 - sair
+
+ 
+
+Observações:
+
+------------
+
+ 
+
+- o vetor de alunos deve ser alocado dinamicamente, com a dimensão inicial 10, através de uma função;
+
+- deve haver uma função para realocar o vetor de alunos, aumentando sempre a dimensão em 10, toda vez que o vetor for preenchido completamente;
+
+- o vetor de compromissos deve ser alocado dinamicamente, com a dimensão inicial 15, através de função;
+
+- deve haver uma função para realocar o vetor de compromissos, aumentando sempre a dimensão em 5, toda vez que o vetor for preenchido completamente;
+
+- utilizar a função qsort (disponível em stdlib.h), para reallizar ordenação de vetores.
