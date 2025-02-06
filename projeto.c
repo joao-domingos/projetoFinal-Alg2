@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 typedef struct {
     int dia;
@@ -35,8 +36,8 @@ typedef struct {
 } td_compromisso;
 
 // parte observacoes do .txt
-int* alocarVetorAlunos() {
-    int *vetor = (int*)malloc(10 * sizeof(int));
+int* alocarVetorAlunos(int tamanhoVetorAlunos) {
+    int *vetor = (int*)malloc(tamanhoVetorAlunos * sizeof(int));
     if (vetor == NULL) {
         printf("Erro na alocação de memória!\n");
         exit(1);
@@ -44,8 +45,8 @@ int* alocarVetorAlunos() {
     return vetor;
 }
 
-int* realocarVetorAlunos(int *vetor) {
-    vetor = (int*)realloc(vetor, 10 * sizeof(int));
+int* realocarVetorAlunos(int *vetor, int novoTamanhoVetorAlunos) {
+    vetor = (int*)realloc(vetor, novoTamanhoVetorAlunos * sizeof(int));
     if (vetor == NULL) {
         printf("Erro na realocação de memória!\n");
         exit(1);
@@ -138,7 +139,7 @@ int verifica_horario(td_hora *) {
 
 
 //come;ar daqui pra baixo
-void cadastra compromisso(td_compromisso, int) {
+void cadastra_compromisso(td_compromisso, int) {
     // devo usar ponteiro para apontar para o aluno? como faco isso
 
     printf("data do compromisso: (dia, mes, ano)"); 
@@ -149,9 +150,14 @@ void cadastra compromisso(td_compromisso, int) {
 }
 
 void imprime_vetor_de_alunos(td_aluno [], int) {
+    
 }
 
 int main(void) {
+    //lembrar de iniciar os vetores alunos e compromissos
+    int tamanhoVetorAlunos = 10;
+    int *vetorAlunos = alocarVetorAlunos(tamanhoVetorAlunos);
+    int *vetorCompromissos = alocarVetorCompromissos();
 
     printf("1 - cadastrar disciplina\n"
             "2 - cadastrar aluno\n"
@@ -166,16 +172,35 @@ int main(void) {
             "7 - sair\n");
 
     int opcao;
+    char subopcao;
     scanf("%d", &opcao);
 
     switch (opcao) {
         case 1:
             break;
         case 2:
+            cadastra_aluno(vetorAlunos, 1);
             break;
         case 3:
+            cadastra_compromisso(vetorCompromissos, 1);
             break;
         case 4:
+            printf("   a - de um aluno                    - ordenado por data e hora\n"
+                    "   b - de todos os alunos             - ordenado por RA, data e hora\n"
+                    "   c - de uma data                    - ordenado por hora e RA\n"
+                    "   d - de todas as datas              - ordenado por data, hora e RA\n");
+                    scanf("%c", &subopcao);
+                    subopcao = tolower(subopcao);
+                    switch(subopcao) {
+                        case 'a':
+                            break;
+                        case 'b':
+                            break;
+                        case 'c':
+                            break;
+                        case 'd':
+                            break;
+                    }
             break;
         case 5:
             break;
@@ -185,9 +210,14 @@ int main(void) {
             printf("saindo do programa...");
             return;
         default:
+            return 1;
             break;
     }
 
+
+    //lembrar de dar liberar a memorias dos vetores alunos e compromissos
+    free(vetorAlunos);
+    free(vetorCompromissos);
 
     return 0;
 }
