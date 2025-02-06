@@ -34,6 +34,43 @@ typedef struct {
     char descricao[300];
 } td_compromisso;
 
+// parte observacoes do .txt
+int* alocarVetorAlunos() {
+    int *vetor = (int*)malloc(10 * sizeof(int));
+    if (vetor == NULL) {
+        printf("Erro na alocação de memória!\n");
+        exit(1);
+    }
+    return vetor;
+}
+
+int* realocarVetorAlunos(int *vetor) {
+    vetor = (int*)realloc(vetor, 10 * sizeof(int));
+    if (vetor == NULL) {
+        printf("Erro na realocação de memória!\n");
+        exit(1);
+    }
+    return vetor;
+}
+
+int* alocarVetorCompromissos() {
+    int *vetor = (int*)malloc(15 * sizeof(int));
+    if (vetor == NULL) {
+        printf("Erro na alocação de memória!\n");
+        exit(1);
+    }
+    return vetor;
+}
+
+int* realocarVetorCompromissos(int *vetor) {
+    vetor = (int*)realloc(vetor, 5 * sizeof(int));
+    if (vetor == NULL) {
+        printf("Erro na realocação de memória!\n");
+        exit(1);
+    }
+    return vetor;
+}
+
 //acho que ta certo
 void cadastra_aluno(td_aluno [], int) {
     printf("ra: ");
@@ -90,12 +127,12 @@ int verifica_data(td_data *) {
 // aqui pensei no jeito mais simples, validacao aepnas, return 0 se nao valida e 1 se valido, nesse caso deverei colocar na main um aviso de erro/pedir outrio input
 int verifica_horario(td_hora *) {
     if (td_hora->hora < 0 || td_hora->hora >= 24) {
-        return 0;
+        return 1;
     }
     if (td_hora->min < 0 || td_hora->min >= 60) {
-        return 0
+        return 1;
     }
-    return 1;
+    return 0;
 }
 
 
