@@ -33,6 +33,7 @@ typedef struct {
     char descricao[300];
 } td_compromisso;
 
+//acho que ta certo
 void cadastra_aluno(td_aluno [], int) {
     printf("ra: ");
     scanf("%d", &td_aluno.ra);
@@ -51,6 +52,49 @@ void cadastra_aluno(td_aluno [], int) {
         }
         disciplinas[i].media = (notas[0] + notas[1] + notas[2] + notas[3]) / 4;
     }
+}
+
+// aqui fiz a validacao da data fazendo com que o usuario desse outro input se nao valida, alem de que nao pensei em como fazer isso em um loop, uma vez que separei a data em dia, mes e ano, logo pode ser 1,2 ou 3 erros e nao um s[o]
+int verifica_data(td_data *) {
+    if (td_data->ano > 2025 || td_data->ano < 1900) {
+        prinf("insira um ano válido: ");
+        scanf("%d", &td_data->ano);
+    }
+    if (td_data->mes > 12 || td_data->mes < 1) {
+        prinf("insira um mês válido: ");
+        scanf("%d", &td_data->mes)
+    }
+    if (td_data->mes % 2 == 0) {
+        if (td_data->mes == 2) {
+            if (td_data->dia > 28 || td_data->dia < 1) {
+                printf("insira um dia válido: ");
+                scanf("%d", &td_data->dia);
+            }
+            else {
+                if (td_data->dia > 30 || td_data->dia < 1) {
+                    prinf("insira um dia válido: ");
+                    scanf("%d", &td_data->dia);
+                }
+            }
+        }
+    }
+    else {
+        if (td_data->dia > 31 || td_data->dia < 1) {
+            printf("insira um dia válido: ");
+            scanf("%d", &td_data->dia);
+        }
+    }
+}
+
+// aqui pensei no jeito mais simples, validacao aepnas, return 0 se nao valida e 1 se valido, nesse caso deverei colocar na main um aviso de erro/pedir outrio input
+int verifica_horario(td_hora *) {
+    if (td_hora->hora < 0 || td_hora->hora >= 24) {
+        return 0;
+    }
+    if (td_hora->min < 0 || td_hora->min >= 60) {
+        return 0
+    }
+    return 1;
 }
 
 int main(void) {
