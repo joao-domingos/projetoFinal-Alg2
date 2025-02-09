@@ -47,7 +47,7 @@ Escrever funções para:
 ----------------------
 
  
-
+ 
 1 - cadastrar aluno, sendo:
   a - um aluno deve cursar ao menos 4 disciplinas
 
