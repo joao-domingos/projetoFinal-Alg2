@@ -130,6 +130,16 @@ void imprime_aluno_por_ra(td_aluno alunos[], int tamanho, int ra) {
     printf("aluno nao enmcontrado\n");
 }
 
+void imprime_compromissos_por_ra(td_compromisso compromissos[], int tamanho, int ra) {
+    for (int i = 0; i < tamanho; i++) {
+        if (compromissos[i].aluno.ra == ra) {
+            imprime_vetor_de_compromissos(&compromissos[i], 1);
+            return;
+        }
+    }
+    printf("aluno nao enmcontrado\n");
+}
+
 
 void imprime_vetor_de_compromissos(td_compromisso compromissos[], int tamanho) {
     for (int i = 0; i < tamanho; i++) {
@@ -251,6 +261,8 @@ int main(void) {
     td_compromisso *compromissos = alocarVetorCompromissos(capacidade_compromissos);
 
     int opcao;
+    int ra_busca;
+    char subopcao;
     do {
 
         printf("1 - cadastrar disciplina\n"
@@ -265,7 +277,6 @@ int main(void) {
                     "6 - imprimir dados de todos os alunos  - ordenado por RA\n"
                     "7 - sair\n");
 
-        char subopcao;
         scanf("%d", &opcao);
 
         switch (opcao) {
@@ -292,32 +303,37 @@ int main(void) {
                         "   b - de todos os alunos             - ordenado por RA, data e hora\n"
                         "   c - de uma data                    - ordenado por hora e RA\n"
                         "   d - de todas as datas              - ordenado por data, hora e RA\n");
-                scanf(" %c", &subopcao);
+                getchar();
+                scanf("%c", &subopcao);
                 subopcao = tolower(subopcao);
                     switch(subopcao) {
                         case 'a':
                             //imprimir vetor compromisso de um aluno ordenado por data e hora
                             //1 sendo o index de qual aluno sera ordenado
+                            printf("digite o ra do aluno: ");
+                            scanf("%d", &ra_busca);
                             qsort(compromissos, 1, sizeof(td_compromisso), comparaDataHoraCompromissos);
-                            imprime_vetor_de_compromissos(compromissos, num_compromissos);
+                            imprime_compromissos_por_ra(compromissos, num_compromissos, ra_busca);
                             break;
                         case 'b':
                             //imprimir vetor compromisso de todos os alunos ordenado por ra data e hora
                             qsort(compromissos, num_compromissos, sizeof(td_compromisso), comparaRaDataHoraCompromissos);
+                            imprime_vetor_de_compromissos(compromissos, num_compromissos);
                             break;
                         case 'c':
                             //imprimir vetor compromisso de uma data ordnado por hora e ra
                             qsort(compromissos, num_compromissos, sizeof(td_compromisso), comparaHoraRaCompromissos);
+                            imprime_vetor_de_compromissos(compromissos, num_compromissos);
                             break;
                         case 'd':
                             //imprimir vetor compromisso de todas as datas ordnado por data hora e ra
                             qsort(compromissos, num_compromissos, sizeof(td_compromisso), comparaDataHoraRaCompromissos);
+
                             break;
                         }
                 break;
             case 5:
                 printf("digite o ra do aluno: ");
-                int ra_busca;
                 scanf("%d", &ra_busca);
                 imprime_aluno_por_ra(alunos, num_alunos, ra_busca);
                 break;
