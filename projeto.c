@@ -120,6 +120,17 @@ void imprime_vetor_de_alunos(td_aluno alunos[], int tamanho) {
     }
 }
 
+void imprime_aluno_por_ra(td_aluno alunos[], int tamanho, int ra) {
+    for (int i = 0; i < tamanho; i++) {
+        if (alunos[i].ra == ra) {
+            imprime_vetor_de_alunos(&alunos[i], 1);
+            return;
+        }
+    }
+    printf("aluno nao enmcontrado\n");
+}
+
+
 void imprime_vetor_de_compromissos(td_compromisso compromissos[], int tamanho) {
     for (int i = 0; i < tamanho; i++) {
         printf("Data: %02d/%02d/%04d\nHorário: %02d:%02d\nDescrição: %s\nAluno: %s (RA: %d)\n", 
@@ -305,7 +316,10 @@ int main(void) {
                         }
                 break;
             case 5:
-                imprime_vetor_de_alunos(alunos, 1);
+                printf("digite o ra do aluno: ");
+                int ra_busca;
+                scanf("%d", &ra_busca);
+                imprime_aluno_por_ra(alunos, num_alunos, ra_busca);
                 break;
             case 6:
                //ordenar vetor de alunos
