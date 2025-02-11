@@ -44,7 +44,6 @@ void cadastra_aluno(td_aluno alunos[], int *quantidade) {
     scanf("%s", novo_aluno.nome);
     printf("email: ");
     scanf("%s", novo_aluno.email);
-    //
     
     for(int i = 0; i < 4; i++) {
         printf("codigo disciplina: ");
@@ -52,9 +51,9 @@ void cadastra_aluno(td_aluno alunos[], int *quantidade) {
         printf("nome disciplina: ");
         scanf("%s", novo_aluno.disciplinas[i].disciplina);
         printf("nota 1, 2, 3 e 4: ");
-        float soma_notas;
-        for(int j = 0; i < 4; j++) {
-            scanf("%d", &novo_aluno.disciplinas[i].notas[j]);
+        float soma_notas = 0.0;
+        for(int j = 0; j < 4; j++) {
+            scanf("%f", &novo_aluno.disciplinas[i].notas[j]);
             soma_notas += novo_aluno.disciplinas[i].notas[j];
         }
         novo_aluno.disciplinas[i].media = soma_notas / 4;
@@ -86,6 +85,11 @@ int verifica_horario(td_hora *horario) {
 //come;ar daqui pra baixo
 void cadastra_compromisso(td_compromisso compromissos[], int *quantidade) {
     td_compromisso novo_compromisso;
+
+    printf("aluno e ra: ");
+    scanf("%s", novo_compromisso.aluno.nome);
+    scanf("%s", novo_compromisso.aluno.ra);
+
     printf("Data do compromisso (dia mes ano): ");
     scanf("%d %d %d", &novo_compromisso.data.dia, &novo_compromisso.data.mes, &novo_compromisso.data.ano);
     verifica_data(&novo_compromisso.data);
@@ -163,6 +167,71 @@ td_compromisso* realocarVetorCompromissos(td_compromisso *vetor, int novoTamanho
     return vetor;
 }
 
+int comparaRaAlunos(const void *a, const void *b) {
+    return ((td_aluno*)a)->ra - ((td_aluno*)b)->ra;
+}
+
+// Comparação por data e hora
+int comparaDataHoraCompromissos(const void *a, const void *b) {
+    td_compromisso *comp1 = (td_compromisso *)a;
+    td_compromisso *comp2 = (td_compromisso *)b;
+
+    // Comparação de ano, mês e dia
+    if (comp1->data.ano != comp2->data.ano)
+        return comp1->data.ano - comp2->data.ano;
+    if (comp1->data.mes != comp2->data.mes)
+        return comp1->data.mes - comp2->data.mes;
+    if (comp1->data.dia != comp2->data.dia)
+        return comp1->data.dia - comp2->data.dia;
+
+    // Comparação de hora e minuto
+    if (comp1->horario.hora != comp2->horario.hora)
+        return comp1->horario.hora - comp2->horario.hora;
+    return comp1->horario.min - comp2->horario.min;
+}
+
+// Comparação por RA, data e hora
+int comparaRaDataHoraCompromissos(const void *a, const void *b) {
+    td_compromisso *comp1 = (td_compromisso *)a;
+    td_compromisso *comp2 = (td_compromisso *)b;
+
+    // Comparação pelo RA do aluno
+    if (comp1->aluno.ra != comp2->aluno.ra)
+        return comp1->aluno.ra - comp2->aluno.ra;
+
+    // Se o RA for igual, comparar por data e hora
+    return comparaDataHoraCompromissos(a, b);
+}
+
+// Comparação por hora e RA
+int comparaHoraRaCompromissos(const void *a, const void *b) {
+    td_compromisso *comp1 = (td_compromisso *)a;
+    td_compromisso *comp2 = (td_compromisso *)b;
+
+    // Comparação por hora e minuto
+    if (comp1->horario.hora != comp2->horario.hora)
+        return comp1->horario.hora - comp2->horario.hora;
+    if (comp1->horario.min != comp2->horario.min)
+        return comp1->horario.min - comp2->horario.min;
+
+    // Se o horário for igual, comparar por RA
+    return comp1->aluno.ra - comp2->aluno.ra;
+}
+
+// Comparação por data, hora e RA
+int comparaDataHoraRaCompromissos(const void *a, const void *b) {
+    td_compromisso *comp1 = (td_compromisso *)a;
+    td_compromisso *comp2 = (td_compromisso *)b;
+
+    // Comparação por data
+    int cmp_data = comparaDataHoraCompromissos(a, b);
+    if (cmp_data != 0)
+        return cmp_data;
+
+    // Se a data e o horário forem iguais, comparar por RA
+    return comp1->aluno.ra - comp2->aluno.ra;
+}
+
 int main(void) {
     //lembrar de iniciar os vetores alunos e compromissos
     int num_alunos = 0, capacidade_alunos = 10;
@@ -206,36 +275,52 @@ int main(void) {
                 }
                 cadastra_compromisso(compromissos, &num_compromissos);
                 break;
+            //codigo esta quebrando /nao apresenta o segundo menu. provavel erro no do while
             case 4:
                 printf("   a - de um aluno                    - ordenado por data e hora\n"
                         "   b - de todos os alunos             - ordenado por RA, data e hora\n"
                         "   c - de uma data                    - ordenado por hora e RA\n"
                         "   d - de todas as datas              - ordenado por data, hora e RA\n");
-                        scanf("%c", &subopcao);
-                        subopcao = tolower(subopcao);
-                        switch(subopcao) {
-                            case 'a':
-                                break;
-                            case 'b':
-                                break;
-                            case 'c':
-                                break;
-                            case 'd':
-                                break;
+                scanf("%c", &subopcao);
+                subopcao = tolower(subopcao);
+                    switch(subopcao) {
+                        case 'a':
+                            //imprimir vetor compromisso de um aluno ordenado por data e hora
+                            //1 sendo o index de qual aluno sera ordenado
+                            qsort(compromissos, 1, sizeof(td_compromisso), comparaDataHoraCompromissos);
+                            imprime_vetor_de_compromissos(compromissos, num_compromissos);
+                            break;
+                        case 'b':
+                            //imprimir vetor compromisso de todos os alunos ordenado por ra data e hora
+                            qsort(compromissos, num_compromissos, sizeof(td_compromisso), comparaDataHoraCompromissos);
+                            break;
+                        case 'c':
+                            //imprimir vetor compromisso de uma data ordnado por hora e ra
+                            qsort(compromissos, num_compromissos, sizeof(td_compromisso), comparaHoraRaCompromissos);
+                            break;
+                        case 'd':
+                            //imprimir vetor compromisso de todas as datas ordnado por data hora e ra
+                            qsort(compromissos, num_compromissos, sizeof(td_compromisso), comparaDataHoraRaCompromissos);
+                            break;
                         }
                 break;
             case 5:
-                imprime_vetor_de_alunos(alunos, num_alunos);
+                imprime_vetor_de_alunos(alunos, 1);
                 break;
             case 6:
-               imprime_vetor_de_compromissos(compromissos, num_compromissos);
+               //ordenar vetor de alunos
+               qsort(alunos,  num_alunos, sizeof(td_aluno), comparaRaAlunos);
+               //imprimir vetor de alunos ordenado
+               imprime_vetor_de_alunos(alunos, num_alunos);
                 break;
             case 7:
-                printf("saindo do programa...");
+                printf("saindo do programa...\n");
                 break;
             default:
                 printf("opcao invalida");
         }
+
+        printf("------------------------------\n");
 
     } while (opcao != 7);
 
