@@ -41,9 +41,9 @@ void cadastra_aluno(td_aluno alunos[], int *quantidade) {
     printf("ra: ");
     scanf("%d", &novo_aluno.ra);
     printf("nome do aluno: ");
-    scanf("%s", novo_aluno.nome);
+    scanf(" %[^\n]", novo_aluno.nome);
     printf("email: ");
-    scanf("%s", novo_aluno.email);
+    scanf(" %[^\n]", novo_aluno.email);
     
     for(int i = 0; i < 4; i++) {
         printf("codigo disciplina: ");
@@ -87,8 +87,8 @@ void cadastra_compromisso(td_compromisso compromissos[], int *quantidade) {
     td_compromisso novo_compromisso;
 
     printf("aluno e ra: ");
-    scanf("%s", novo_compromisso.aluno.nome);
-    scanf("%s", novo_compromisso.aluno.ra);
+    scanf(" %[^\n]", novo_compromisso.aluno.nome);
+    scanf("%d", novo_compromisso.aluno.ra);
 
     printf("Data do compromisso (dia mes ano): ");
     scanf("%d %d %d", &novo_compromisso.data.dia, &novo_compromisso.data.mes, &novo_compromisso.data.ano);
@@ -281,7 +281,7 @@ int main(void) {
                         "   b - de todos os alunos             - ordenado por RA, data e hora\n"
                         "   c - de uma data                    - ordenado por hora e RA\n"
                         "   d - de todas as datas              - ordenado por data, hora e RA\n");
-                scanf("%c", &subopcao);
+                scanf(" %c", &subopcao);
                 subopcao = tolower(subopcao);
                     switch(subopcao) {
                         case 'a':
@@ -292,7 +292,7 @@ int main(void) {
                             break;
                         case 'b':
                             //imprimir vetor compromisso de todos os alunos ordenado por ra data e hora
-                            qsort(compromissos, num_compromissos, sizeof(td_compromisso), comparaDataHoraCompromissos);
+                            qsort(compromissos, num_compromissos, sizeof(td_compromisso), comparaRaDataHoraCompromissos);
                             break;
                         case 'c':
                             //imprimir vetor compromisso de uma data ordnado por hora e ra
