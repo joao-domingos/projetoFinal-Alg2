@@ -140,6 +140,14 @@ void imprime_compromissos_por_ra(td_compromisso compromissos[], int tamanho, int
     printf("aluno nao enmcontrado\n");
 }
 
+void imprime_compromissos_dataEspecifica_por_horaRa(td_compromisso compromissos[], int tamanho, int dia, int mes, int ano) {
+    for (int i = 0; i < tamanho; i++) {
+        if (compromissos[i].data.dia == dia && compromissos[i].data.mes == mes && compromissos[i].data.ano == ano) {
+            imprime_vetor_de_compromissos(&compromissos[i], 1);
+        }
+    }
+}
+
 
 void imprime_vetor_de_compromissos(td_compromisso compromissos[], int tamanho) {
     for (int i = 0; i < tamanho; i++) {
@@ -260,8 +268,7 @@ int main(void) {
     td_aluno *alunos = alocarVetorAlunos(capacidade_alunos);
     td_compromisso *compromissos = alocarVetorCompromissos(capacidade_compromissos);
 
-    int opcao;
-    int ra_busca;
+    int opcao, ra_busca, dia, mes, ano;
     char subopcao;
     do {
 
@@ -322,13 +329,18 @@ int main(void) {
                             break;
                         case 'c':
                             //imprimir vetor compromisso de uma data ordnado por hora e ra
+
+                            //TERMINAR PRECISA SER DE UNMA DATA EM ESPECIFICO
+
+                            printf("digite a data (dia mes ano): ");
+                            scanf("%d %d %d", &dia, &mes, &ano);
                             qsort(compromissos, num_compromissos, sizeof(td_compromisso), comparaHoraRaCompromissos);
-                            imprime_vetor_de_compromissos(compromissos, num_compromissos);
+                            imprime_compromissos_dataEspecifica_por_horaRa(compromissos, num_compromissos, dia, mes, ano);
                             break;
                         case 'd':
                             //imprimir vetor compromisso de todas as datas ordnado por data hora e ra
                             qsort(compromissos, num_compromissos, sizeof(td_compromisso), comparaDataHoraRaCompromissos);
-
+                            imprime_vetor_de_compromissos(compromissos, num_compromissos);
                             break;
                         }
                 break;
